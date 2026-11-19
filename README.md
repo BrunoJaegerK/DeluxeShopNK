@@ -135,11 +135,15 @@ ShopForm:
     - "Diamond:264:0:142|https://example.com/images/diamond.png"
 ```
 
-- Utiliza enlaces directos a archivos de imagen PNG.
-- Se recomienda utilizar HTTPS.
-- El enlace debe ser accesible públicamente y permitir que los clientes Bedrock descarguen la imagen.
+- Utiliza una URL pública que responda directamente con un recurso de imagen (Content-Type: image/*), no con una página HTML de una wiki o una página de vista previa.
+- Se recomienda utilizar HTTPS y formatos compatibles con Bedrock, especialmente PNG.
+- Se siguen redirecciones HTTP habituales y se comprueba el tipo de contenido final.
+- Al iniciar o recargar la tienda, DeluxeShopNK comprueba las URLs en segundo plano y avisa en consola si el servidor devuelve HTML, un error HTTP o no puede acceder al recurso.
+- La comprobación del servidor es orientativa: no garantiza que cada cliente Bedrock pueda descargar la imagen (el host puede bloquear hotlinking o tener restricciones TLS).
 - La imagen es opcional; las entradas sin URL conservan sus botones normales.
 - La imagen se muestra en el botón del artículo dentro del menú de categoría.
+
+**Importante:** una dirección como https://sitio/wiki/Nombre?file=imagen.png suele ser una página web, no el archivo de imagen. Usa la URL directa del archivo o aloja el PNG en un hosting/CDN público.
 
 ### Economía
 
