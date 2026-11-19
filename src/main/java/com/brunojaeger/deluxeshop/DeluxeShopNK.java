@@ -31,11 +31,27 @@ public final class DeluxeShopNK extends PluginBase {
             java.util.ArrayList<ShopItem> entries = new java.util.ArrayList<ShopItem>();
             for (String raw : getConfig().getStringList("ShopForm." + category)) {
                 ShopItem item = ShopItem.parse(category, raw);
-                if (item != null) entries.add(item);
-                else getLogger().warning("Skipping invalid entry in " + category + ": " + raw);
+                if (item != null) {
+                    entries.add(item);
+                    validateImageAsync(item);
+                } else {
+                    getLogger().warning("Skipping invalid entry in " + category + ": " + raw);
+                }
             }
             categories.put(category, entries);
         }
+    }
+
+    private void validateImageAsync(final ShopItem item) {
+        if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) return;
+        getServer().getScheduler().scheduleAsyncTask(this, () -> {
+            String problem = item.validateImageEndpoint();
+            if (problem != null) {
+                getLogger().warning("Image URL for shop item '" + item.getName() + "' in category '"
+                        + item.getCategory() + "' may not work in Bedrock Forms: " + problem
+                        + ". URL: " + item.getImageUrl());
+            }
+        });
     }
 
     public Map<String, List<ShopItem>> getCategories() { return categories; }
