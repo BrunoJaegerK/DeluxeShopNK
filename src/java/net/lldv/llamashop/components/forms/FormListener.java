@@ -1,0 +1,18 @@
+/*    */ package net.lldv.llamashop.components.forms;
+/*    */ 
+/*    */ import cn.nukkit.event.EventHandler;
+/*    */ import cn.nukkit.event.Listener;
+/*    */ import cn.nukkit.event.player.PlayerFormRespondedEvent;
+/*    */ import cn.nukkit.form.window.FormWindowCustom;
+/*    */ import cn.nukkit.form.window.FormWindowModal;
+/*    */ import cn.nukkit.form.window.FormWindowSimple;
+/*    */ 
+/*    */ public class FormListener
+/*    */   implements Listener {
+/*    */   @EventHandler
+/*    */   public void on(PlayerFormRespondedEvent event) {
+/* 14 */     if (event.getWindow() instanceof FormWindowSimple) FormHandler.handleSimple(event.getPlayer(), (FormWindowSimple)event.getWindow()); 
+/* 15 */     if (event.getWindow() instanceof FormWindowModal) FormHandler.handleModal(event.getPlayer(), (FormWindowModal)event.getWindow()); 
+/* 16 */     if (event.getWindow() instanceof FormWindowCustom) FormHandler.handleCustom(event.getPlayer(), (FormWindowCustom)event.getWindow()); 
+/*    */   }
+/*    */ }
