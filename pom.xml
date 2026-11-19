@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.brunojaeger</groupId>
+  <artifactId>deluxeshopnk</artifactId>
+  <version>2.0.0</version>
+  <packaging>jar</packaging>
+  <name>DeluxeShopNK</name>
+  <description>Configurable shop plugin for Nukkit PetteriM1 Edition.</description>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+  </properties>
+  <repositories>
+    <repository><id>opencollab-snapshots</id><url>https://repo.opencollab.dev/maven-snapshots/</url></repository>
+    <repository><id>opencollab-releases</id><url>https://repo.opencollab.dev/maven-releases/</url></repository>
+  </repositories>
+  <dependencies>
+    <dependency><groupId>cn.nukkit</groupId><artifactId>Nukkit</artifactId><version>PM1E</version><scope>provided</scope></dependency>
+  </dependencies>
+  <build>
+    <finalName>DeluxeShopNK</finalName>
+    <plugins>
+      <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version><configuration><source>${maven.compiler.source}</source><target>${maven.compiler.target}</target><encoding>UTF-8</encoding></configuration></plugin>
+      <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId><version>3.4.2</version><configuration><archive><manifestEntries><Implementation-Title>DeluxeShopNK</Implementation-Title><Implementation-Version>${project.version}</Implementation-Version><Implementation-Vendor>BrunoJaegerK</Implementation-Vendor></manifestEntries></archive></configuration></plugin>
+    </plugins>
+  </build>
+</project>
