@@ -58,7 +58,17 @@ public final class ShopItem {
             item.getClass().getMethod("addEnchantment",arrayType).invoke(item,array);
         } catch(Exception ignored) { }
     }
-    private static boolean isValidImageUrl(String value) {\n        try { java.net.URI uri=new java.net.URI(value); String scheme=uri.getScheme(); return uri.isAbsolute()&&uri.getHost()!=null&&(\"http\".equalsIgnoreCase(scheme)||\"https\".equalsIgnoreCase(scheme)); } catch(Exception e) { return false; }\n    }\n    public String getCategory(){return category;} public String getName(){return name;}
+    private static boolean isValidImageUrl(String value) {
+        try {
+            java.net.URI uri = new java.net.URI(value);
+            String scheme = uri.getScheme();
+            return uri.isAbsolute() && uri.getHost() != null
+                    && ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public String getCategory(){return category;} public String getName(){return name;}
     public int getId(){return id;} public int getMeta(){return meta;} public double getPrice(){return price;}
     public String getCurrency(){return currency;} public String getImageUrl(){return imageUrl;} public Map<Integer,Integer> getEnchantments(){return enchantments;}
 }
