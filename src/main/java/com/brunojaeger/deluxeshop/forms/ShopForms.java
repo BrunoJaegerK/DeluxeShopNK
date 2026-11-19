@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
-import cn.nukkit.form.element.ElementButton;
+import cn.nukkit.form.element.ElementButton;\nimport cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.element.ElementInput;
 import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowCustom;
@@ -41,7 +41,11 @@ public final class ShopForms implements Listener {
         for(ShopItem item:items) {
             String text=plugin.getConfig().getString("ui.item-button","§b{item} §7- §a{price} {currency}")
                 .replace("{item}",item.getName()).replace("{price}",format(item.getPrice())).replace("{currency}",item.getCurrency());
-            form.addButton(new ElementButton(text));
+            if(item.getImageUrl()!=null&&!item.getImageUrl().isEmpty()) {
+                form.addButton(new ElementButton(text,new ElementButtonImageData(ElementButtonImageData.IMAGE_DATA_TYPE_URL,item.getImageUrl())));
+            } else {
+                form.addButton(new ElementButton(text));
+            }
         }
         form.addButton(new ElementButton(plugin.getConfig().getString("ui.back-button","§cBack")));
         callbacks.put(form,(p,index)->{if(index==items.size())openShop(p);else if(index>=0&&index<items.size())openPurchase(p,items.get(index));});
