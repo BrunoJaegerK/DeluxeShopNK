@@ -15,6 +15,10 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
+      - name: Download PM1E API jar
+        run: |
+          mkdir -p libs
+          curl -fL --retry 3 -o libs/Nukkit-PM1E.jar https://github.com/PetteriM1/NukkitPetteriM1Edition/releases/latest/download/Nukkit-PM1E.jar
       - name: Package plugin
         run: mvn -B clean package
       - uses: actions/upload-artifact@v4
