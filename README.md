@@ -58,10 +58,10 @@ Values: `auto`, `llamaeconomy`, `economyapi`, or `disabled`. Auto prefers LlamaE
 `com.brunojaeger.deluxeshop.events.ShopPurchaseEvent` fires after a successful purchase and exposes the player, item details, amount, total and currency ID.
 
 ## Build
-Java 17 and Maven are recommended for building against PM1E:
+Java 17 and Maven are required. Put the official PM1E server jar at `libs/Nukkit-PM1E.jar` before running Maven. GitHub Actions downloads this jar automatically.
 
 ```bash
-mvn clean package
+mkdir -p libs\n# Download the official PM1E jar into libs/Nukkit-PM1E.jar\nmvn clean package
 ```
 
 Output: `target/DeluxeShopNK.jar`.
