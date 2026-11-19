@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Java-8-orange?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 8">
   <img src="https://img.shields.io/badge/Build-Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven">
   <img src="https://img.shields.io/badge/Economy-LlamaEconomy%20%7C%20EconomyAPI-2E8B57?style=for-the-badge" alt="Economy providers">
-  <img src="https://img.shields.io/badge/License-MIT- blue?style=for-the-badge" alt="MIT License">
+  <img src="https://img.shields.io/badge/License-MIT-8A2BE2?style=for-the-badge" alt="MIT License">
 </p>
 
 <p align="center"><b>Tienda configurable para servidores NukkitPetteriM1Edition, con categorías ilimitadas, compras por cantidad, múltiples economías e imágenes PNG en los botones de Bedrock Forms.</b></p>
