@@ -17,7 +17,7 @@ public final class ShopItem {
 
     public static ShopItem parse(String category,String raw) {
         try {
-            String[] imageParts=raw.split("\\\\|",2);
+            String[] imageParts=raw.split("\\|",2);
             String core=imageParts[0].trim();
             String imageUrl=imageParts.length>1?imageParts[1].trim():"";
             if(!imageUrl.isEmpty()&&!isValidImageUrl(imageUrl)) return null;
