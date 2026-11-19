@@ -1,6 +1,10 @@
 package com.brunojaeger.deluxeshop;
 
 import cn.nukkit.item.Item;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -58,16 +62,74 @@ public final class ShopItem {
             item.getClass().getMethod("addEnchantment",arrayType).invoke(item,array);
         } catch(Exception ignored) { }
     }
+
     private static boolean isValidImageUrl(String value) {
         try {
-            java.net.URI uri = new java.net.URI(value);
+            URI uri = new URI(value);
             String scheme = uri.getScheme();
-            return uri.isAbsolute() && uri.getHost() != null
+            return uri.isAbsolute() && uri.getHost() != null && uri.getUserInfo() == null
                     && ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme));
         } catch (Exception e) {
             return false;
         }
     }
+
+    /**
+     * Checks the final response after HTTP redirects. Returns null when the
+     * endpoint responds with an image content type, otherwise a diagnostic.
+     * This method performs network I/O and must only be called asynchronously.
+     */
+    public String validateImageEndpoint() {
+        if (imageUrl == null || imageUrl.isEmpty()) return null;
+        HttpURLConnection connection = null;
+        try {
+            connection = openImageConnection("HEAD");
+            int status = connection.getResponseCode();
+            String contentType = connection.getContentType();
+            if (status >= 200 && status < 300 && isImageContentType(contentType)) return null;
+        } catch (Exception ignored) {
+            // Some hosts do not implement HEAD. Retry with GET below.
+        } finally {
+            if (connection != null) connection.disconnect();
+        }
+
+        connection = null;
+        try {
+            connection = openImageConnection("GET");
+            int status = connection.getResponseCode();
+            String contentType = connection.getContentType();
+            if (status < 200 || status >= 300) {
+                return "HTTP " + status + " (" + connection.getURL() + ")";
+            }
+            if (!isImageContentType(contentType)) {
+                return "el servidor respondió Content-Type '" + (contentType == null ? "desconocido" : contentType)
+                        + "' en lugar de image/*";
+            }
+            InputStream stream = connection.getInputStream();
+            if (stream != null) stream.close();
+            return null;
+        } catch (Exception ex) {
+            return "no se pudo comprobar la URL: " + ex.getClass().getSimpleName() + ": " + ex.getMessage();
+        } finally {
+            if (connection != null) connection.disconnect();
+        }
+    }
+
+    private HttpURLConnection openImageConnection(String method) throws Exception {
+        URL original = new URL(imageUrl);
+        HttpURLConnection connection = (HttpURLConnection) original.openConnection();
+        connection.setInstanceFollowRedirects(true);
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
+        connection.setRequestMethod(method);
+        connection.setRequestProperty("User-Agent", "DeluxeShopNK/2.0");
+        return connection;
+    }
+
+    private static boolean isImageContentType(String contentType) {
+        return contentType != null && contentType.toLowerCase(java.util.Locale.ROOT).startsWith("image/");
+    }
+
     public String getCategory(){return category;} public String getName(){return name;}
     public int getId(){return id;} public int getMeta(){return meta;} public double getPrice(){return price;}
     public String getCurrency(){return currency;} public String getImageUrl(){return imageUrl;} public Map<Integer,Integer> getEnchantments(){return enchantments;}
