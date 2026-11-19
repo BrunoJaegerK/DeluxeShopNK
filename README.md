@@ -61,7 +61,9 @@ Values: `auto`, `llamaeconomy`, `economyapi`, or `disabled`. Auto prefers LlamaE
 Java 17 and Maven are required. Put the official PM1E server jar at `libs/Nukkit-PM1E.jar` before running Maven. GitHub Actions downloads this jar automatically.
 
 ```bash
-mkdir -p libs\n# Download the official PM1E jar into libs/Nukkit-PM1E.jar\nmvn clean package
+mkdir -p libs
+curl -fL --retry 3 -o libs/Nukkit-PM1E.jar https://github.com/PetteriM1/NukkitPetteriM1Edition/releases/latest/download/Nukkit-PM1E.jar
+mvn clean package
 ```
 
 Output: `target/DeluxeShopNK.jar`.
