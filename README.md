@@ -47,6 +47,19 @@ ShopForm:
 
 Categories can be added freely under `ShopForm`.
 
+### PNG button images (Bedrock Forms)
+
+Append a pipe (`|`) and a publicly accessible image URL to any item entry. The URL is shown as a Bedrock button image in the category item list. Use direct PNG image links (HTTPS recommended); images are optional.
+
+```yaml
+ShopForm:
+  Blocks:
+    - "Stone:1:0:2.5|https://your-host.com/images/stone.png"
+```
+
+The image host must allow Bedrock clients to fetch the image directly. URLs with unsupported schemes are rejected.
+
+
 ## Economy settings
 ```yaml
 economy:
