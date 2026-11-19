@@ -42,12 +42,15 @@ public final class ShopItem {
         try {
             Class<?> type=Class.forName("cn.nukkit.item.enchantment.Enchantment");
             Object enchant=null;
-            for(String method:new String[]{"get","getEnchantment","getEnchantmentById"}) {
-                try { enchant=type.getMethod(method,int.class).invoke(null,id); break; } catch(NoSuchMethodException ignored) {}
-            }
+            // getEnchantment returns a clone; get() exposes a shared registry instance.
+            try { enchant=type.getMethod("getEnchantment",int.class).invoke(null,id); }
+            catch(NoSuchMethodException ignored) { enchant=type.getMethod("get",int.class).invoke(null,id); }
             if(enchant==null) return;
-            try { type.getMethod("setLevel",int.class).invoke(enchant,level); } catch(NoSuchMethodException ignored) {}
-            item.getClass().getMethod("addEnchantment",type).invoke(item,enchant);
+            type.getMethod("setLevel",int.class).invoke(enchant,level);
+            Class<?> arrayType=java.lang.reflect.Array.newInstance(type,0).getClass();
+            Object array=java.lang.reflect.Array.newInstance(type,1);
+            java.lang.reflect.Array.set(array,0,enchant);
+            item.getClass().getMethod("addEnchantment",arrayType).invoke(item,array);
         } catch(Exception ignored) { }
     }
     public String getCategory(){return category;} public String getName(){return name;}
