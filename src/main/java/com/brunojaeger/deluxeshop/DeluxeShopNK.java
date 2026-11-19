@@ -2,6 +2,7 @@ package com.brunojaeger.deluxeshop;
 
 import cn.nukkit.Player;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.scheduler.AsyncTask;
 import com.brunojaeger.deluxeshop.command.ShopCommand;
 import com.brunojaeger.deluxeshop.economy.EconomyBridge;
 import com.brunojaeger.deluxeshop.forms.ShopForms;
@@ -44,12 +45,15 @@ public final class DeluxeShopNK extends PluginBase {
 
     private void validateImageAsync(final ShopItem item) {
         if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) return;
-        getServer().getScheduler().scheduleAsyncTask(this, () -> {
-            String problem = item.validateImageEndpoint();
-            if (problem != null) {
-                getLogger().warning("Image URL for shop item '" + item.getName() + "' in category '"
-                        + item.getCategory() + "' may not work in Bedrock Forms: " + problem
-                        + ". URL: " + item.getImageUrl());
+        getServer().getScheduler().scheduleAsyncTask(this, new AsyncTask() {
+            @Override
+            public void onRun() {
+                String problem = item.validateImageEndpoint();
+                if (problem != null) {
+                    getLogger().warning("Image URL for shop item '" + item.getName() + "' in category '"
+                            + item.getCategory() + "' may not work in Bedrock Forms: " + problem
+                            + ". URL: " + item.getImageUrl());
+                }
             }
         });
     }
