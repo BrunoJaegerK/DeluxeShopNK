@@ -1,5 +1,6 @@
 package com.brunojaeger.deluxeshop;
 
+import cn.nukkit.Player;
 import cn.nukkit.plugin.PluginBase;
 import com.brunojaeger.deluxeshop.command.ShopCommand;
 import com.brunojaeger.deluxeshop.economy.EconomyBridge;
