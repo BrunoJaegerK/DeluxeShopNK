@@ -2,7 +2,6 @@ package com.brunojaeger.deluxeshop;
 
 import cn.nukkit.Player;
 import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.scheduler.AsyncTask;
 import com.brunojaeger.deluxeshop.command.ShopCommand;
 import com.brunojaeger.deluxeshop.economy.EconomyBridge;
 import com.brunojaeger.deluxeshop.forms.ShopForms;
@@ -34,28 +33,13 @@ public final class DeluxeShopNK extends PluginBase {
                 ShopItem item = ShopItem.parse(category, raw);
                 if (item != null) {
                     entries.add(item);
-                    validateImageAsync(item);
                 } else {
-                    getLogger().warning("Skipping invalid entry in " + category + ": " + raw);
+                    getLogger().warning("Skipping invalid entry in " + category + ": " + raw
+                            + ". Image paths must point inside the Bedrock resource pack, for example textures/items/diamond.");
                 }
             }
             categories.put(category, entries);
         }
-    }
-
-    private void validateImageAsync(final ShopItem item) {
-        if (item.getImageUrl() == null || item.getImageUrl().isEmpty()) return;
-        getServer().getScheduler().scheduleAsyncTask(this, new AsyncTask() {
-            @Override
-            public void onRun() {
-                String problem = item.validateImageEndpoint();
-                if (problem != null) {
-                    getLogger().warning("Image URL for shop item '" + item.getName() + "' in category '"
-                            + item.getCategory() + "' may not work in Bedrock Forms: " + problem
-                            + ". URL: " + item.getImageUrl());
-                }
-            }
-        });
     }
 
     public Map<String, List<ShopItem>> getCategories() { return categories; }

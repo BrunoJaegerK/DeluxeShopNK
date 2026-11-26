@@ -42,8 +42,8 @@ public final class ShopForms implements Listener {
         for(ShopItem item:items) {
             String text=plugin.getConfig().getString("ui.item-button","§b{item} §7- §a{price} {currency}")
                 .replace("{item}",item.getName()).replace("{price}",format(item.getPrice())).replace("{currency}",item.getCurrency());
-            if(item.getImageUrl()!=null&&!item.getImageUrl().isEmpty()) {
-                form.addButton(new ElementButton(text,new ElementButtonImageData(ElementButtonImageData.IMAGE_DATA_TYPE_URL,item.getImageUrl())));
+            if(item.getImagePath()!=null&&!item.getImagePath().isEmpty()) {
+                form.addButton(new ElementButton(text,new ElementButtonImageData(ElementButtonImageData.IMAGE_DATA_TYPE_PATH,item.getImagePath())));
             } else {
                 form.addButton(new ElementButton(text));
             }
