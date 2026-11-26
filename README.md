@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/License-MIT-8A2BE2?style=for-the-badge" alt="MIT License">
 </p>
 
-<p align="center"><b>Tienda configurable para servidores NukkitPetteriM1Edition, con categorías ilimitadas, compras por cantidad, múltiples economías e imágenes PNG en los botones de Bedrock Forms.</b></p>
+<p align="center"><b>Tienda configurable para servidores NukkitPetteriM1Edition, con categorías ilimitadas, compras por cantidad, múltiples economías e iconos del paquete de recursos en los botones de Bedrock Forms.</b></p>
 
 ---
 
@@ -30,7 +30,7 @@
 - Compatibilidad con **LlamaEconomy** y **EconomyAPI**, con detección automática.
 - Compatibilidad opcional con monedas secundarias de **EconomyExpandNK**.
 - Artículos con encantamientos configurables, incluidos libros encantados.
-- Imágenes PNG mediante URL pública en los botones de artículos de Bedrock Forms.
+- Iconos de artículos desde el paquete de recursos Bedrock mediante rutas como `textures/items/diamond`.
 - Evento de compra para integraciones con otros plugins.
 
 ## 🧩 Dependencias
@@ -105,45 +105,46 @@ Formato con moneda y encantamientos:
 - "Nombre:ID:Meta:Precio:CurrencyID:EnchantID=Level,EnchantID=Level"
 ```
 
+También puedes añadir la ruta de la textura después de `|`:
+
+```yaml
+- "Nombre:ID:Meta:Precio:CurrencyID:EnchantID=Level|textures/items/diamond_sword"
+```
+
 - **Nombre:** nombre que se muestra en la tienda.
 - **ID:** identificador del artículo de Nukkit.
 - **Meta:** daño o variante del artículo.
 - **Precio:** coste por unidad.
 - **CurrencyID:** identificador de moneda; utiliza `default` para la economía principal.
 - **EnchantID=Level:** encantamiento y nivel. Se pueden añadir varios separados por comas.
+- **Ruta de textura:** ruta dentro del paquete de recursos Bedrock, por ejemplo `textures/items/diamond`. No escribas la extensión `.png`.
 
 Ejemplo:
 
 ```yaml
 ShopForm:
+  Resources:
+    - "Coal:263:0:3|textures/items/coal"
+    - "Iron:265:0:14.9|textures/items/iron_ingot"
+    - "Diamond:264:0:142|textures/items/diamond"
   Enchanted:
-    - "Sharpness V Diamond Sword:276:0:2500:default:9=5"
-    - "Efficiency V Diamond Pickaxe:278:0:3500:default:15=5"
-    - "Enchanted Book Sharpness V:403:0:1200:default:9=5"
+    - "Sharpness V Diamond Sword:276:0:2500:default:9=5|textures/items/diamond_sword"
 ```
+
+### 🖼️ Iconos mediante `textures/items`
+
+DeluxeShopNK utiliza el mismo mecanismo de imágenes locales de Bedrock Forms que NeoBuyerV2.2: el botón se crea con `ElementButtonImageData.IMAGE_DATA_TYPE_PATH`. No descarga imágenes ni utiliza URLs externas.
+
+- La ruta se resuelve desde el paquete de recursos que recibe el cliente Bedrock.
+- Para artículos, utiliza rutas como `textures/items/iron_ingot`, `textures/items/diamond` o `textures/items/diamond_sword`.
+- La ruta debe existir en el paquete de recursos activo del jugador. Si utilizas texturas personalizadas, asegúrate de que tu paquete las incluya y se distribuya a los jugadores.
+- Normalmente se omite la extensión `.png`.
+- No añadas URLs como `https://...`: el sistema anterior de imágenes por URL fue retirado.
+- Si no se especifica una ruta, el botón se muestra sin imagen.
+
+**Importante:** el plugin no incorpora ni distribuye un paquete de texturas. Solo referencia las rutas existentes en el paquete de recursos Bedrock del cliente.
 
 Para monedas secundarias, reemplaza `default` por el identificador correspondiente registrado en EconomyExpandNK.
-
-### 🖼️ Imágenes PNG en Bedrock Forms
-
-Puedes añadir una imagen a un botón de artículo colocando el carácter `|` después de la entrada y una URL pública directa a la imagen.
-
-```yaml
-ShopForm:
-  Resources:
-    - "Cobblestone:4:0:1.3|https://example.com/images/cobblestone.png"
-    - "Diamond:264:0:142|https://example.com/images/diamond.png"
-```
-
-- Utiliza una URL pública que responda directamente con un recurso de imagen (Content-Type: image/*), no con una página HTML de una wiki o una página de vista previa.
-- Se recomienda utilizar HTTPS y formatos compatibles con Bedrock, especialmente PNG.
-- Se siguen redirecciones HTTP habituales y se comprueba el tipo de contenido final.
-- Al iniciar o recargar la tienda, DeluxeShopNK comprueba las URLs en segundo plano y avisa en consola si el servidor devuelve HTML, un error HTTP o no puede acceder al recurso.
-- La comprobación del servidor es orientativa: no garantiza que cada cliente Bedrock pueda descargar la imagen (el host puede bloquear hotlinking o tener restricciones TLS).
-- La imagen es opcional; las entradas sin URL conservan sus botones normales.
-- La imagen se muestra en el botón del artículo dentro del menú de categoría.
-
-**Importante:** una dirección como https://sitio/wiki/Nombre?file=imagen.png suele ser una página web, no el archivo de imagen. Usa la URL directa del archivo o aloja el PNG en un hosting/CDN público.
 
 ### Economía
 
@@ -226,7 +227,7 @@ GitHub Actions prepara la dependencia de PM1E y ejecuta la compilación automati
 
 ## ℹ️ About
 
-Tienda configurable para NukkitPetteriM1Edition, con categorías personalizables, múltiples economías, encantamientos e imágenes PNG en los botones de Bedrock Forms.
+Tienda configurable para NukkitPetteriM1Edition, con categorías personalizables, múltiples economías, encantamientos e iconos de artículos desde el paquete de recursos Bedrock.
 
 - **Autor:** BrunoJaegerK
 - **Servidor objetivo:** NukkitPetteriM1Edition (Minecraft Bedrock)
