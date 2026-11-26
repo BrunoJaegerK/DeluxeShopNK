@@ -42,7 +42,9 @@ ui:
   item-button: "§b{item} §7- §a{price} {currency}"
   back-button: "§c« Back"
   purchase-title: "Purchase: {item}"
-  purchase-prompt: "Price per item: {price} {currency}\\nEnter the amount:"
+  purchase-prompt: |-
+    Price per item: {price} {currency}
+    Enter the amount:
   amount-placeholder: "Amount"
 
 messages:
