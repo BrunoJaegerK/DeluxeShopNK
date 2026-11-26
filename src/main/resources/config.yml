@@ -1,13 +1,13 @@
 ShopForm:
   Resources:
-    # Optional image: append |https://public-host/image.png to an item entry.
-    - "Cobblestone:4:0:1.3|https://example.com/cobblestone.png"
-    - "Coal:263:0:3"
-    - "Iron:265:0:14.9"
-    - "Gold:266:0:19.3"
-    - "Redstone:331:0:20.7"
-    - "Diamonds:264:0:142"
-    - "Emeralds:388:0:78.4"
+    # Optional icon path from the Bedrock resource pack (without .png).
+    - "Cobblestone:4:0:1.3|textures/blocks/cobblestone"
+    - "Coal:263:0:3|textures/items/coal"
+    - "Iron:265:0:14.9|textures/items/iron_ingot"
+    - "Gold:266:0:19.3|textures/items/gold_ingot"
+    - "Redstone:331:0:20.7|textures/items/redstone_dust"
+    - "Diamonds:264:0:142|textures/items/diamond"
+    - "Emeralds:388:0:78.4|textures/items/emerald"
   Materials:
     - "Oak Wood:17:0:5.3"
     - "Spruce Wood:17:1:5.3"
@@ -16,19 +16,19 @@ ShopForm:
     - "Acacia Wood:162:0:5.3"
     - "Jungle Wood:17:3:5.3"
   Food:
-    - "Apple:260:0:1.3"
-    - "Bread:297:0:1.3"
-    - "Steak:364:0:1.3"
-    - "Potato:392:0:4.5"
+    - "Apple:260:0:1.3|textures/items/apple"
+    - "Bread:297:0:1.3|textures/items/bread"
+    - "Steak:364:0:1.3|textures/items/beef_cooked"
+    - "Potato:392:0:4.5|textures/items/potato"
   Special:
     - "Beacon:138:0:10000"
-    - "Golden Apple:322:0:250"
-    - "Enchanted Golden Apple:466:1:3000"
+    - "Golden Apple:322:0:250|textures/items/apple_golden"
+    - "Enchanted Golden Apple:466:1:3000|textures/items/apple_golden"
   Enchanted:
-    # Format: Name:ID:Meta:Price:Currency:EnchantID=Level,ID=Level
-    - "Sharpness V Diamond Sword:276:0:2500:default:9=5"
-    - "Efficiency V Diamond Pickaxe:278:0:3500:default:15=5"
-    - "Enchanted Book Sharpness V:403:0:1200:default:9=5"
+    # Format: Name:ID:Meta:Price:Currency:EnchantID=Level,ID=Level|textures/items/texture_name
+    - "Sharpness V Diamond Sword:276:0:2500:default:9=5|textures/items/diamond_sword"
+    - "Efficiency V Diamond Pickaxe:278:0:3500:default:15=5|textures/items/diamond_pickaxe"
+    - "Enchanted Book Sharpness V:403:0:1200:default:9=5|textures/items/book_enchanted"
 
 economy:
   # auto | llamaeconomy | economyapi | disabled
@@ -42,7 +42,7 @@ ui:
   item-button: "§b{item} §7- §a{price} {currency}"
   back-button: "§c« Back"
   purchase-title: "Purchase: {item}"
-  purchase-prompt: "Price per item: {price} {currency}\nEnter the amount:"
+  purchase-prompt: "Price per item: {price} {currency}\\nEnter the amount:"
   amount-placeholder: "Amount"
 
 messages:
